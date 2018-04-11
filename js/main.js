@@ -13,6 +13,18 @@ let board1 =
   '---+---+---\n' +
   '   |   |   \n';
 
+// game intro 
+console.log(
+  '\n' +
+  'It\'s time to play tic-tac-toe! \n\n' +
+  'Imagine the board looks like this: \n' + 
+  board0 + 
+  '\n' +
+  'Choose your move based on the numerical position \n\n' +
+  'It\'s X\'s turn to go first \n' +
+  board1
+);
+
 let positions = {
   1: ' ',
   2: ' ',
@@ -24,13 +36,6 @@ let positions = {
   8: ' ',
   9: ' '
 }
-// positions[0] = 'X'
-// let board = 
-// ' ' + positions[0] + ' | ' + positions[1] + ' | ' + positions[2] + ' \n' +
-// '---+---+---\n' +
-// ' ' + positions[3] + ' | ' + positions[4] + ' | ' + positions[5] + ' \n' +
-// '---+---+---\n' +
-// ' ' + positions[6] + ' | ' + positions[7] + ' | ' + positions[8] + ' \n';
 
 const createBoard = (moves) => {
   let board = 
@@ -88,26 +93,12 @@ var schema = {
     }
   };
   
- 
-  
-  // Get two properties from the user: email, password 
-  // prompt.get(schema, function (err, result) {
-  //   // 
-  //   // Log the results. 
-  //   // 
-  //   // console.log('Command-line input received:');
-  //   // console.log(typeof result.move)
-  //   console.log('  player selected: ' + namePosition(result.move));
-  //   positions[result.move.toString()] = 'X';
-    
-  //   console.log(createBoard(positions));
-  // });
 prompt.start();
 
 const playGame = (playerTurn, moves) => {
   prompt.get(schema, function (err, result) {
     if (isValidMove(result.move, moves)) {
-      console.log('  player ' + playerTurn + ' selected: ' + namePosition(result.move));
+      console.log('\n' + playerTurn + ' selected: ' + namePosition(result.move));
       moves[result.move.toString()] = playerTurn;
       console.log(createBoard(moves));
       if (checkForWin(moves, playerTurn)) {
@@ -118,10 +109,12 @@ const playGame = (playerTurn, moves) => {
         } else {
           playerTurn = 'X'
         }
+        console.log('  It\'s ' + playerTurn + '\'s turn' )
         playGame(playerTurn, moves)
       }
     } else {
       console.log('That position has already been taken');
+      console.log('  It\'s still ' + playerTurn + '\'s turn' )
       playGame(playerTurn, moves);
     }
   });
