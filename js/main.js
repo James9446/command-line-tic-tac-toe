@@ -17,11 +17,11 @@ let board1 =
 console.log(
   '\n' +
   'It\'s time to play tic-tac-toe! \n\n' +
-  'Imagine the board looks like this: \n' + 
+  'Imagine the board looks like this: \n\n' + 
   board0 + 
   '\n' +
   'Choose your move based on the numerical position \n\n' +
-  'It\'s X\'s turn to go first \n' +
+  'It\'s X\'s turn to go first \n\n' +
   board1
 );
 
@@ -64,6 +64,14 @@ checkForWin = (moves, player) => {
   return false;
 }
 
+checkForCatsGame = (moves) => {
+  for (let key in moves) {
+    if (moves[key] === ' ') 
+    return false;
+  }
+  return true;
+}
+
 const namePosition = (num) => {
   let position = '';
   if (num <= '3') {
@@ -98,22 +106,24 @@ prompt.start();
 const playGame = (playerTurn, moves) => {
   prompt.get(schema, function (err, result) {
     if (isValidMove(result.move, moves)) {
-      console.log('\n' + playerTurn + ' selected: ' + namePosition(result.move));
+      console.log('\n' + playerTurn + ' selected: ' + namePosition(result.move) + '\n');
       moves[result.move.toString()] = playerTurn;
       console.log(createBoard(moves));
       if (checkForWin(moves, playerTurn)) {
-        console.log(playerTurn + ' has won!')
+        console.log(playerTurn + ' has won!\n')
+      } else if (checkForCatsGame(moves)) {
+        console.log('Cats game!')
       } else {
         if (playerTurn === 'X') {
           playerTurn = 'O'
         } else {
           playerTurn = 'X'
         }
-        console.log('  It\'s ' + playerTurn + '\'s turn' )
+        console.log('  It\'s ' + playerTurn + '\'s turn\n' )
         playGame(playerTurn, moves)
       }
     } else {
-      console.log('That position has already been taken');
+      console.log('\nThat position has already been taken');
       console.log('  It\'s still ' + playerTurn + '\'s turn' )
       playGame(playerTurn, moves);
     }
