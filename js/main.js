@@ -92,34 +92,34 @@ const namePosition = (num) => {
 }
 
 var schema = {
-    properties: {
-      move: {
-        pattern: /^[1-9]$/,
-        message: 'Your move must be a number between 1 and 9',
-        required: true
-      }
+  properties: {
+    move: {
+      pattern: /^[1-9]$/,
+      message: 'Your move must be a number between 1 and 9',
+      required: true
     }
-  };
+  }
+};
   
 prompt.start();
 
 const playGame = (playerTurn, moves) => {
   prompt.get(schema, function (err, result) {
     if (isValidMove(result.move, moves)) {
-      console.log('\n' + playerTurn + ' selected: ' + namePosition(result.move) + '\n');
+      console.log('\n  ' + playerTurn + ' selected: ' + namePosition(result.move) + '\n');
       moves[result.move.toString()] = playerTurn;
       console.log(createBoard(moves));
       if (checkForWin(moves, playerTurn)) {
         console.log(playerTurn + ' has won!\n')
       } else if (checkForCatsGame(moves)) {
-        console.log('Cats game!')
+        console.log('Cats game!\n')
       } else {
         if (playerTurn === 'X') {
           playerTurn = 'O'
         } else {
           playerTurn = 'X'
         }
-        console.log('  It\'s ' + playerTurn + '\'s turn\n' )
+        console.log('  ' + playerTurn + '\'s turn\n' )
         playGame(playerTurn, moves)
       }
     } else {
